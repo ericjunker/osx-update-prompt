@@ -1,8 +1,12 @@
 #!/bin/bash
 
-#check for updates
+
 #if no updates are available, exit
-#TEST LINE OF CODE
+if softwareupdate -l | grep 'No new software available.'; then
+	#echo "No new software available."
+	exit 0
+fi
+
 
 
 #change 3 to however many times users should be able to put off updating
