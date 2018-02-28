@@ -4,6 +4,7 @@ import time
 import atexit
 import ttk
 import sys
+import subprocess
 
 
 #constants, i.e. change these to change what the program does and displays
@@ -103,6 +104,7 @@ class ReminderWindow(tk.Frame):
 	def click_restart(self):
 		print "The user clicked restart"
 		#Call the terminal command to restart and install updates
+		#subprocess.Call(["softwareupdate", "-i"])
 
 	def click_snooze(self):
 		print "The user clicked snooze"
