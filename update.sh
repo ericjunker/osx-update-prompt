@@ -1,12 +1,13 @@
 #!/bin/bash
 
+#PRECONDITIONS: RUN AS ROOT SO SHUTDOWN WORKS
 
 #if no updates are available, exit
-if softwareupdate -l | grep 'No new software available.'; then
-	#echo "No new software available."
+#if no updates are available, that prints to stderr
+if softwareupdate -l 2>&1 > /dev/null | grep 'No new software available.'; then
+	echo "No updates are available."
 	exit 0
 fi
-
 
 
 #change 3 to however many times users should be able to put off updating
