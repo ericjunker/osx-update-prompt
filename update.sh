@@ -22,7 +22,7 @@ fi
 softwareupdate -i -a > log.txt
 
 #see if the restart is needed
-if grep -Fxq "You have installed one or more updates that requires that you restart your computer" log.txt
+if grep -Fq "Please restart immediately" log.txt
 	then
 		#change 3 to however many times users should be able to put off updating
 		for i in {3..0}; do
