@@ -189,12 +189,13 @@ class UpdateWindow(tk.Frame):
 	def click_restart(self):
 		print "The user clicked restart"
 		#Call the terminal command to restart and install updates
-		self.master.destroy()
+		subprocess.call(["shutdown", "-r", "now"])
 
 	def user_exits(self):
 		'''Called either from click_snooze or by exiting the program. Must be separate from snooze to
 		capture exits from right clicking the dock icon'''
 		print "the user exited"
+		self.click_restart()
 
 	def decrement_timer(self):
 		global DELAY_TIME
@@ -218,6 +219,7 @@ if __name__ == '__main__':
 	if (len(sys.argv) > 1):
 		remaining = int(sys.argv[1])
 	else:
+		#default argument, change for testing
 		remaining = 1
 
 	if (remaining > 0):
