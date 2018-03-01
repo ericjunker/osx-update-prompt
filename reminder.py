@@ -76,34 +76,37 @@ class ReminderWindow(tk.Frame):
 		self.master.config(menu=tk.Menu(self))
 		
 		#text with some padding
-		dialog_frame = tk.Frame(self)
-		dialog_frame.pack(padx=20, pady=15)
-		tk.Label(dialog_frame, text=REMINDER_LABEL).pack()
+		self.dialog_frame = tk.Frame(self)
+		self.dialog_frame.pack(padx=20, pady=15)
+		self.mainLabel = tk.Label(self.dialog_frame, text=REMINDER_LABEL)
+		self.mainLabel.pack()
 
 		#text and progress barw ith  time remaining
-		timer_frame = tk.Frame(self)
-		timer_frame.pack(padx=20, pady=20)
+		self.timer_frame = tk.Frame(self)
+		self.timer_frame.pack(padx=20, pady=20)
 
-		tk.Label(timer_frame, text = "Time remaining: ").pack()
-		self.timerLabel = tk.Label(timer_frame, text = seconds_to_time(DELAY_TIME))
+		tk.Label(self.timer_frame, text = "Time remaining: ").pack()
+		self.timerLabel = tk.Label(self.timer_frame, text = seconds_to_time(DELAY_TIME))
 		self.timerLabel.pack()
 
-		self.progress = ttk.Progressbar(timer_frame, orient='horizontal', length=500, mode='determinate')
+		self.progress = ttk.Progressbar(self.timer_frame, orient='horizontal', length=500, mode='determinate')
 		self.progress.pack()
 		#get initial time for progress bar
 		self.initial = DELAY_TIME
 
 		#add buttons in a frame
-		button_frame = tk.Frame(self)
-		button_frame.pack(padx=15, pady=(0, 15), anchor="e")
-		self.snoozeLabel = tk.Label(button_frame, text = "You can delay the update _ times			")
+		self.button_frame = tk.Frame(self)
+		self.button_frame.pack(padx=15, pady=(0, 15), anchor="e")
+		self.snoozeLabel = tk.Label(self.button_frame, text = "You can delay the update _ times			")
 		self.snoozeLabel.pack(side = "left")
-		tk.Button(button_frame, text = "Restart Now", default = "active", command=self.click_restart).pack(side="right")
-		tk.Button(button_frame, text = "Snooze", command = self.click_snooze).pack(side="right")
+		tk.Button(self.button_frame, text = "Restart Now", default = "active", command=self.click_restart).pack(side="right")
+		tk.Button(self.button_frame, text = "Snooze", command = self.click_snooze).pack(side="right")
 
 	def click_restart(self):
 		print "The user clicked restart"
-		#Change screen issue #1
+		self.button_frame.destroy()
+		self.timer_frame.pack_forget()
+		self.mainLabel.configure(text = "Restarting now", font = ("San Fransisco", 30))
 
 
 		subprocess.call(["shutdown", "-r", "now"])
@@ -166,29 +169,34 @@ class UpdateWindow(tk.Frame):
 		#text with some padding
 		dialog_frame = tk.Frame(self)
 		dialog_frame.pack(padx=20, pady=15)
-		tk.Label(dialog_frame, text=UPDATE_LABEL).pack()
+		self.mainLabel = tk.Label(dialog_frame, text=REMINDER_LABEL)
+		self.mainLabel.pack()
 
-		#text and progress barw ith  time remaining
-		timer_frame = tk.Frame(self)
-		timer_frame.pack(padx=20, pady=20)
+		#text and progress bar with  time remaining
+		self.timer_frame = tk.Frame(self)
+		self.timer_frame.pack(padx=20, pady=20)
 
-		tk.Label(timer_frame, text = "Time remaining: ").pack()
-		self.timerLabel = tk.Label(timer_frame, text = seconds_to_time(DELAY_TIME))
+		tk.Label(self.timer_frame, text = "Time remaining: ").pack()
+		self.timerLabel = tk.Label(self.timer_frame, text = seconds_to_time(DELAY_TIME))
 		self.timerLabel.pack()
 
-		self.progress = ttk.Progressbar(timer_frame, orient='horizontal', length=500, mode='determinate')
+		self.progress = ttk.Progressbar(self.timer_frame, orient='horizontal', length=500, mode='determinate')
 		self.progress.pack()
 		#get initial time for progress bar
 		self.initial = DELAY_TIME
 
 		#add buttons in a frame
-		button_frame = tk.Frame(self)
-		button_frame.pack(padx=15, pady=(0, 15), anchor="e")
-		tk.Button(button_frame, text = "Restart Now", default = "active", command=self.click_restart).pack(side="right")
+		self.button_frame = tk.Frame(self)
+		self.button_frame.pack(padx=15, pady=(0, 15), anchor="e")
+		tk.Button(self.button_frame, text = "Restart Now", default = "active", command=self.click_restart).pack(side="right")
 
 	def click_restart(self):
 		print "The user clicked restart"
 		#Call the terminal command to restart and install updates
+		self.button_frame.destroy()
+		self.timer_frame.pack_forget()
+		self.mainLabel.configure(text = "Restarting now", font = ("San Fransisco", 30))
+		#time.sleep(5)
 		subprocess.call(["shutdown", "-r", "now"])
 
 	def user_exits(self):
