@@ -103,12 +103,10 @@ class ReminderWindow(tk.Frame):
 
 	def click_restart(self):
 		print "The user clicked restart"
-		#Call the terminal command to restart and install updates
-		#maybe the rainbow beach ball during the update is a feature, keeps the user from messing with anything
-		results = subprocess.check_output(["softwareupdate", "-i", "-a"])
+		#Change screen issue #1
 
-		if "You have installed one or more updates that requires that you restart your computer" in results:
-			subprocess.call(["shutdown", "-r", "now"])
+
+		subprocess.call(["shutdown", "-r", "now"])
 
 
 	def click_snooze(self):
